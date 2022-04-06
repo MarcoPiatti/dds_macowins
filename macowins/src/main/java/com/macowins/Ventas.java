@@ -47,6 +47,12 @@ class Venta {
     MedioDePago medioDePago;
     Collection<ArticuloVenta> articulos;
 
+    Venta(LocalDate fecha, MedioDePago medioDePago, Collection<ArticuloVenta> articulos) {
+        this.fecha = fecha;
+        this.medioDePago = medioDePago;
+        this.articulos = articulos;
+    }
+
     Venta(MedioDePago medioDePago, Collection<ArticuloVenta> articulos) {
         this.medioDePago = medioDePago;
         this.articulos = articulos;
