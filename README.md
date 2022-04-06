@@ -13,7 +13,8 @@
 
 El cliente solicitó determinar las ganancias de un determinado día.
 Para determinar la ganancia se deben modelar a las prendas de manera
-que se pueda tener en cuesta el costo involucrado.
+que se pueda tener en cuesta el costo involucrado. Por el momento
+Consideramos ganancia = dinero recaudado en ventas.
 
 ## 3. Comentarios de alternativas descartadas
 
