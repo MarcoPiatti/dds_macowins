@@ -1,0 +1,76 @@
+@startuml Macowins
+
+interface EstadoPrenda {
+    double modificarPrecio(double)
+}
+
+class PrendaNueva 
+EstadoPrenda <-- PrendaNueva
+
+class Promocion {
+    double porcentaje
+}
+EstadoPrenda <-- Promocion
+
+class Liquidacion
+EstadoPrenda <-- Liquidacion
+
+'''''''''''''''''''''''''''''
+
+class Prenda {
+    double precioBase
+    TipoPrenda tipo
+    EstadoPrenda estado
+    double precioDeVenta()
+}
+Prenda *-- EstadoPrenda
+
+enum TipoPrenda {
+    CAMISA
+    PANTALON
+    SACO
+}
+Prenda o-- TipoPrenda
+
+
+'''''''''''''''''''''''''''''
+
+class ArticuloVenta{
+    Prenda prenda
+    int cantidad
+    double precio()
+}
+ArticuloVenta o-- Prenda
+
+interface MedioDePago{
+    double modificarVenta(double)
+}
+
+class Efectivo
+MedioDePago <-- Efectivo
+
+class Tarjeta {
+    int cuotas
+    int coeficiente
+}
+MedioDePago <-- Tarjeta
+
+class Venta {
+    LocalDate fecha
+    MedioDePago medioDePago
+    Collection<ArticuloVenta> articulos
+    double ganancia()
+}
+Venta *-- MedioDePago
+Venta *-- ArticuloVenta
+
+'''''''''''''''''''''''''''''
+
+class VentasRegistradas {
+    Collection<Venta> ventas
+    double gananciaPorFecha(LocalDate)
+    registrar(Venta)
+}
+VentasRegistradas o-- Venta
+
+@enduml
