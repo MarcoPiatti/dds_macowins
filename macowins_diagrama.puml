@@ -1,19 +1,19 @@
-@startuml Macowins
+@startuml macowins_diagrama
 
 interface EstadoPrenda {
     double modificarPrecio(double)
 }
 
 class PrendaNueva 
-EstadoPrenda <-- PrendaNueva
+EstadoPrenda <|.. PrendaNueva
 
 class Promocion {
     double porcentaje
 }
-EstadoPrenda <-- Promocion
+EstadoPrenda <|.. Promocion
 
 class Liquidacion
-EstadoPrenda <-- Liquidacion
+EstadoPrenda <|.. Liquidacion
 
 '''''''''''''''''''''''''''''
 
@@ -23,14 +23,14 @@ class Prenda {
     EstadoPrenda estado
     double precioDeVenta()
 }
-Prenda *-- EstadoPrenda
+Prenda --> EstadoPrenda
 
 enum TipoPrenda {
     CAMISA
     PANTALON
     SACO
 }
-Prenda o-- TipoPrenda
+Prenda --> TipoPrenda
 
 
 '''''''''''''''''''''''''''''
@@ -40,20 +40,20 @@ class ArticuloVenta{
     int cantidad
     double precio()
 }
-ArticuloVenta o-- Prenda
+ArticuloVenta --> Prenda
 
 interface MedioDePago{
     double modificarVenta(double)
 }
 
 class Efectivo
-MedioDePago <-- Efectivo
+MedioDePago <|.. Efectivo
 
 class Tarjeta {
     int cuotas
     int coeficiente
 }
-MedioDePago <-- Tarjeta
+MedioDePago <|.. Tarjeta
 
 class Venta {
     LocalDate fecha
@@ -61,8 +61,8 @@ class Venta {
     Collection<ArticuloVenta> articulos
     double ganancia()
 }
-Venta *-- MedioDePago
-Venta *-- ArticuloVenta
+Venta --> MedioDePago
+Venta --> ArticuloVenta
 
 '''''''''''''''''''''''''''''
 
@@ -71,6 +71,6 @@ class VentasRegistradas {
     double gananciaPorFecha(LocalDate)
     registrar(Venta)
 }
-VentasRegistradas o-- Venta
+VentasRegistradas --> Venta
 
 @enduml
