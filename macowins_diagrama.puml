@@ -1,14 +1,14 @@
 @startuml macowins_diagrama
 
 interface EstadoPrenda {
-    double modificarPrecio(double)
+    Double precioSegunEstado(Double)
 }
 
 class PrendaNueva 
 EstadoPrenda <|.. PrendaNueva
 
 class Promocion {
-    double porcentaje
+    Double precioDescontado
 }
 EstadoPrenda <|.. Promocion
 
@@ -18,59 +18,53 @@ EstadoPrenda <|.. Liquidacion
 '''''''''''''''''''''''''''''
 
 class Prenda {
-    double precioBase
-    TipoPrenda tipo
-    EstadoPrenda estado
-    double precioDeVenta()
+    Double precioBase
+    Double precioDeVenta()
 }
-Prenda --> EstadoPrenda
+Prenda --> "1" EstadoPrenda
 
 enum TipoPrenda {
     CAMISA
     PANTALON
     SACO
 }
-Prenda --> TipoPrenda
+Prenda --> "1" TipoPrenda
 
 
 '''''''''''''''''''''''''''''
 
 class ArticuloVenta{
-    Prenda prenda
-    int cantidad
-    double precio()
+    Integer cantidad
+    Double precio()
 }
-ArticuloVenta --> Prenda
+ArticuloVenta --> "1" Prenda
 
 interface MedioDePago{
-    double modificarVenta(double)
+    Double precioConRecargo(Double)
 }
 
 class Efectivo
 MedioDePago <|.. Efectivo
 
 class Tarjeta {
-    int cuotas
-    int coeficiente
+    Integer cuotas
+    Integer coeficiente
 }
 MedioDePago <|.. Tarjeta
 
 class Venta {
     LocalDate fecha
-    MedioDePago medioDePago
-    Collection<ArticuloVenta> articulos
-    double ganancia()
+    Double ganancia()
 }
-Venta --> MedioDePago
-Venta --> ArticuloVenta
+Venta --> "1" MedioDePago
+Venta --> "1..*" ArticuloVenta
 
 '''''''''''''''''''''''''''''
 
-class VentasRegistradas {
-    Collection<Venta> ventas
-    double gananciaPorFecha(LocalDate)
+class Negocio {
+    Double gananciaPorFecha(LocalDate)
     registrar(Venta)
 }
-VentasRegistradas --> Venta
+Negocio --> "1..*" Venta
 
 @enduml
